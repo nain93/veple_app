@@ -26,9 +26,12 @@ class _Snackbar {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Flexible(
-              child: Text(
-                message,
-                style: TextStyle(color: AppColors.text.basic).merge(textStyle),
+              child: Center(
+                child: Text(
+                  message,
+                  style:
+                      TextStyle(color: AppColors.text.basic).merge(textStyle),
+                ),
               ),
             ),
             ClipOval(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -6,7 +7,7 @@ import 'package:veple/utils/localization.dart';
 import 'package:veple/utils/router_config.dart';
 import 'package:veple/widgets/common/button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:veple/widgets/common/snackbar.dart';
 import 'package:go_router/go_router.dart';
 
 class SignIn extends HookConsumerWidget {
@@ -46,6 +47,7 @@ class SignIn extends HookConsumerWidget {
                 onPress: () async {
                   try {
                     loading.value = true;
+
                     OAuthToken token =
                         await UserApi.instance.loginWithKakaoAccount();
                     var provider = auth.OAuthProvider('oidc.kakao');
@@ -58,7 +60,7 @@ class SignIn extends HookConsumerWidget {
                       context.go(GoRoutes.home.fullPath);
                     }
                   } catch (error) {
-                    print('카카오계정으로 로그인 실패 $error');
+                    snackbar.alert(context, '로그인 실패');
                   } finally {
                     loading.value = false;
                   }

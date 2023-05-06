@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:veple/models/item_model.dart';
 import 'package:veple/navigations/main_bottom_tab.dart';
 import 'package:veple/screens/edit_profile.dart';
-import 'package:veple/screens/home.dart';
+import 'package:veple/screens/home/widgets/home.dart';
 import 'package:veple/screens/item_detail.dart';
 import 'package:veple/screens/permission_screen.dart';
 import 'package:veple/screens/result.dart';
