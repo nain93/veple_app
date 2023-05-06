@@ -59,11 +59,15 @@ class Button extends StatelessWidget {
   final MaterialStateProperty<OutlinedBorder?>? borderShape;
 
   Widget _renderLoading(BuildContext context) {
-    return CircularProgressIndicator(
-      semanticsLabel: '로딩',
-      backgroundColor: backgroundColor ?? AppColors.role.brand,
-      strokeWidth: 3,
-      valueColor: AlwaysStoppedAnimation<Color>(color),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 20,
+      height: MediaQuery.of(context).size.width / 20,
+      child: CircularProgressIndicator(
+        semanticsLabel: '로딩',
+        backgroundColor: backgroundColor ?? AppColors.role.brand,
+        strokeWidth: 3,
+        valueColor: AlwaysStoppedAnimation<Color>(color),
+      ),
     );
   }
 

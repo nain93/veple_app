@@ -1,4 +1,4 @@
-const appName = 'flutter_seoul';
+const appName = 'veple';
 
 const mobileMaxWith = 850;
 const tableMaxWith = 1100;

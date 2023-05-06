@@ -50,3 +50,5 @@ coverage
 
 *.g.dart 
 *.freezed.dart
+google-services.json
+GoogleService-Info.plist

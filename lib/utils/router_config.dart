@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_seoul/models/item_model.dart';
-import 'package:flutter_seoul/navigations/main_bottom_tab.dart';
-import 'package:flutter_seoul/screens/edit_profile.dart';
-import 'package:flutter_seoul/screens/home.dart';
-import 'package:flutter_seoul/screens/item_detail.dart';
-import 'package:flutter_seoul/screens/permission_screen.dart';
-import 'package:flutter_seoul/screens/result.dart';
-import 'package:flutter_seoul/screens/sample.dart';
-import 'package:flutter_seoul/screens/sign_in.dart';
+import 'package:veple/models/item_model.dart';
+import 'package:veple/navigations/main_bottom_tab.dart';
+import 'package:veple/screens/edit_profile.dart';
+import 'package:veple/screens/home.dart';
+import 'package:veple/screens/item_detail.dart';
+import 'package:veple/screens/permission_screen.dart';
+import 'package:veple/screens/result.dart';
+import 'package:veple/screens/sample.dart';
+import 'package:veple/screens/sign_in.dart';
 import 'package:go_router/go_router.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -22,6 +22,20 @@ enum GoRoutes {
   editProfile,
   sample,
   result
+}
+
+CustomTransitionPage buildPageWithDefaultTransition<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 120),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(opacity: animation, child: child),
+  );
 }
 
 extension GoRoutesName on GoRoutes {
@@ -54,9 +68,12 @@ GoRouter routerConfig([String? initialLocation]) => GoRouter(
             GoRoute(
               name: GoRoutes.home.name,
               path: GoRoutes.home.fullPath,
-              builder: (context, state) {
-                return const Home();
-              },
+              pageBuilder: (context, state) =>
+                  buildPageWithDefaultTransition<void>(
+                context: context,
+                state: state,
+                child: const Home(),
+              ),
               routes: [
                 GoRoute(
                   name: GoRoutes.itemDetail.name,
@@ -71,16 +88,22 @@ GoRouter routerConfig([String? initialLocation]) => GoRouter(
             GoRoute(
               name: GoRoutes.permission.name,
               path: GoRoutes.permission.fullPath,
-              builder: (context, state) {
-                return const PermissionScreen();
-              },
+              pageBuilder: (context, state) =>
+                  buildPageWithDefaultTransition<void>(
+                context: context,
+                state: state,
+                child: const PermissionScreen(),
+              ),
             ),
             GoRoute(
               name: GoRoutes.editProfile.name,
               path: GoRoutes.editProfile.fullPath,
-              builder: (context, state) {
-                return const EditProfile();
-              },
+              pageBuilder: (context, state) =>
+                  buildPageWithDefaultTransition<void>(
+                context: context,
+                state: state,
+                child: const EditProfile(),
+              ),
             ),
           ],
         ),

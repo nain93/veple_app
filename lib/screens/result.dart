@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_seoul/widgets/common/app_bar.dart';
-import 'package:flutter_seoul/widgets/responsive.dart';
-import 'package:flutter_seoul/utils/localization.dart' show localization;
+import 'package:veple/widgets/common/app_bar.dart';
+import 'package:veple/widgets/responsive.dart';
+import 'package:veple/utils/localization.dart' show localization;
 
 class Result extends HookWidget {
   const Result({super.key});

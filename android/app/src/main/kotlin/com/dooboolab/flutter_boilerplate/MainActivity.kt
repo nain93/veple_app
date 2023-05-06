@@ -1,4 +1,4 @@
-package com.dooboolab.flutter_seoul
+package com.nain.veple
 
 import io.flutter.embedding.android.FlutterActivity
 

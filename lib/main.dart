@@ -1,15 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_seoul/generated/l10n.dart';
-import 'package:flutter_seoul/providers/user_provider.dart';
-import 'package:flutter_seoul/utils/router_config.dart';
-import 'package:flutter_seoul/utils/themes.dart';
+import 'package:veple/generated/l10n.dart';
+import 'package:veple/utils/config.dart';
+import 'package:veple/utils/router_config.dart';
+import 'package:veple/utils/themes.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_seoul/widgets/model_theme.dart';
+import 'package:veple/widgets/model_theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'firebase_options.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class Logger extends ProviderObserver {
   @override
@@ -34,6 +38,13 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: '.env');
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  KakaoSdk.init(
+    nativeAppKey: Config().nativeAppKey,
+    javaScriptAppKey: Config().javascriptAppKey,
+  );
 
   runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
 }
@@ -44,20 +55,12 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeNotifier = ref.watch(modelProvider);
-    final currentUser = ref.watch(userStateProvider);
+    var user = auth.FirebaseAuth.instance.currentUser;
 
     useEffect(() {
-      if (!currentUser.isLoading) {
-        FlutterNativeSplash.remove();
-      }
+      FlutterNativeSplash.remove();
       return null;
-    }, [currentUser.isLoading]);
-
-    if (currentUser.isLoading) {
-      return const MaterialApp(
-        home: Scaffold(body: SizedBox()),
-      );
-    }
+    }, []);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -77,9 +80,7 @@ class MyApp extends HookConsumerWidget {
           Locale('ko', 'KR'),
         ],
         routerConfig: routerConfig(
-          (currentUser.value != null && currentUser.value!.isNotEmpty)
-              ? GoRoutes.home.fullPath
-              : GoRoutes.signIn.fullPath,
+          user != null ? GoRoutes.home.fullPath : GoRoutes.signIn.fullPath,
         ),
       ),
     );

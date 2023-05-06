@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_seoul/providers/user_provider.dart';
-import 'package:flutter_seoul/repositories/user_repository.dart';
-import 'package:flutter_seoul/utils/assets.dart';
-import 'package:flutter_seoul/widgets/common/button.dart';
-import 'package:flutter_seoul/widgets/common/edit_text.dart';
-import 'package:flutter_seoul/widgets/model_theme.dart';
+import 'package:go_router/go_router.dart';
+import 'package:veple/utils/assets.dart';
+import 'package:veple/utils/router_config.dart';
+import 'package:veple/widgets/common/button.dart';
+import 'package:veple/widgets/common/edit_text.dart';
+import 'package:veple/widgets/model_theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -72,8 +73,10 @@ class EditProfile extends HookConsumerWidget {
             color: Theme.of(context).iconTheme.color,
             icon: const Icon(Icons.exit_to_app),
             onPressed: () async {
-              await UserRepository.instance.logout();
-              ref.watch(userStateProvider.notifier).removeUser();
+              await FirebaseAuth.instance.signOut();
+              if (context.mounted) {
+                context.go(GoRoutes.signIn.fullPath);
+              }
             },
             iconSize: 30,
           )
