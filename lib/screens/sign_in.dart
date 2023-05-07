@@ -9,6 +9,7 @@ import 'package:veple/widgets/common/button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:veple/widgets/common/snackbar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends HookConsumerWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -16,7 +17,63 @@ class SignIn extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var t = localization(context);
-    var loading = useState(false);
+    var kakaoLoading = useState(false);
+    var googleLoading = useState(false);
+    var appleLoading = useState(false);
+
+    Future<void> handleKakaoLogin() async {
+      try {
+        kakaoLoading.value = true;
+
+        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+        var provider = auth.OAuthProvider('oidc.kakao');
+        var credential = provider.credential(
+          idToken: token.idToken,
+          accessToken: token.accessToken,
+        );
+        auth.FirebaseAuth.instance.signInWithCredential(credential);
+        if (context.mounted) {
+          context.go(GoRoutes.home.fullPath);
+        }
+      } catch (error) {
+        snackbar.alert(context, '로그인 실패');
+      } finally {
+        kakaoLoading.value = false;
+      }
+    }
+
+    Future<void> handleGoogleLogin() async {
+      GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: [
+          // 'email',
+          // 'https://www.googleapis.com/auth/contacts.readonly',
+        ],
+      );
+
+      try {
+        googleLoading.value = true;
+        var googleSignInAccount = await googleSignIn.signIn();
+        if (googleSignInAccount != null) {
+          var googleSignInAuthentication =
+              await googleSignInAccount.authentication;
+
+          var credential = auth.GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken,
+          );
+          auth.FirebaseAuth.instance.signInWithCredential(credential);
+          if (context.mounted) {
+            context.go(GoRoutes.home.fullPath);
+          }
+        }
+      } catch (error) {
+        snackbar.alert(context, '로그인 실패');
+      } finally {
+        googleLoading.value = false;
+      }
+    }
+
+    Future<void> handleAppleLogin() async {}
 
     return Scaffold(
       body: SafeArea(
@@ -42,29 +99,21 @@ class SignIn extends HookConsumerWidget {
               ),
               const Spacer(),
               Button(
-                loading: loading.value,
+                loading: kakaoLoading.value,
                 text: '카카오로 로그인하기',
-                onPress: () async {
-                  try {
-                    loading.value = true;
-
-                    OAuthToken token =
-                        await UserApi.instance.loginWithKakaoAccount();
-                    var provider = auth.OAuthProvider('oidc.kakao');
-                    var credential = provider.credential(
-                      idToken: token.idToken,
-                      accessToken: token.accessToken,
-                    );
-                    auth.FirebaseAuth.instance.signInWithCredential(credential);
-                    if (context.mounted) {
-                      context.go(GoRoutes.home.fullPath);
-                    }
-                  } catch (error) {
-                    snackbar.alert(context, '로그인 실패');
-                  } finally {
-                    loading.value = false;
-                  }
-                },
+                onPress: handleKakaoLogin,
+              ),
+              const SizedBox(height: 10),
+              Button(
+                loading: googleLoading.value,
+                text: '구글로 로그인하기',
+                onPress: handleGoogleLogin,
+              ),
+              const SizedBox(height: 10),
+              Button(
+                loading: appleLoading.value,
+                text: '애플로 로그인하기',
+                onPress: handleAppleLogin,
               ),
               Container(
                 margin: const EdgeInsets.only(top: 56, bottom: 48),
