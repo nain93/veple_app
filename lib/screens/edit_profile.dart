@@ -6,6 +6,7 @@ import 'package:veple/utils/assets.dart';
 import 'package:veple/utils/router_config.dart';
 import 'package:veple/widgets/common/button.dart';
 import 'package:veple/widgets/common/edit_text.dart';
+import 'package:veple/widgets/common/image.dart';
 import 'package:veple/widgets/model_theme.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +26,7 @@ class EditProfile extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var user = FirebaseAuth.instance.currentUser;
     final themeNotifier = ref.watch(modelProvider);
 
     final ImagePicker picker = ImagePicker();
@@ -125,16 +127,23 @@ class EditProfile extends HookConsumerWidget {
                                     backgroundColor: themeNotifier.isDark
                                         ? Colors.white
                                         : Colors.black,
-                                    child: const Text(
-                                      '사진 선택',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700),
-                                    ),
+                                    child: ImageOnNetwork(
+                                        borderRadius: 85,
+                                        width: 170,
+                                        height: 170,
+                                        imageURL: user?.photoURL ?? ''),
+                                    // const Text(
+                                    //   '사진 선택',
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.w700),
+                                    // ),
                                   )
                                 : CircleAvatar(
                                     radius: 85,
-                                    backgroundImage:
-                                        FileImage(File(imageFile.value!.path))),
+                                    backgroundImage: FileImage(
+                                      File(imageFile.value!.path),
+                                    ),
+                                  ),
                             Positioned(
                               bottom: 0,
                               right: 0,
@@ -142,10 +151,11 @@ class EditProfile extends HookConsumerWidget {
                                 width: 48,
                                 height: 48,
                                 child: Container(
-                                  decoration: const BoxDecoration(
+                                  // ignore: prefer_const_constructors
+                                  decoration: BoxDecoration(
                                     color: Colors.black,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(4)),
                                   ),
                                   child: const Icon(
                                     Icons.camera_alt,
@@ -171,21 +181,21 @@ class EditProfile extends HookConsumerWidget {
                         )),
                     EditText(
                       onChanged: (String txt) => nameValue.value = txt,
-                      hintText: 'Name',
+                      hintText: '${user?.displayName}',
                     ),
                     Container(
                         margin: const EdgeInsets.fromLTRB(0, 24, 0, 10),
                         child: const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Description',
+                            '자기소개',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
                           ),
                         )),
                     EditText(
                       onChanged: (String txt) => descValue.value = txt,
-                      hintText: 'Description',
+                      hintText: '자기소개',
                     ),
                     Button(
                       text: 'Update',

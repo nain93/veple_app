@@ -59,6 +59,9 @@ dependencies:
   google_sign_in: ^6.1.0
   sign_in_with_apple: ^4.3.0
 
+dependency_overrides:
+  intl: ^0.17.0-nullsafety.2
+
 dev_dependencies:
   integration_test:
     sdk: flutter
