@@ -9,7 +9,6 @@ class ItemDetail extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('zz');
     return Scaffold(
       appBar: AppBarBack(
         title: Text(item.title),
