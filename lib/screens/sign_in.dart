@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:veple/utils/colors.dart';
 import 'package:veple/utils/localization.dart';
 import 'package:veple/utils/router_config.dart';
@@ -95,7 +96,28 @@ class SignIn extends HookConsumerWidget {
     }
 
     Future<void> handleAppleLogin() async {
-      // todo
+      try {
+        appleLoading.value = true;
+        var credential = await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        );
+
+        if (credential.identityToken != null) {
+          // todo firebase auth provider login
+          // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+          // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+          if (context.mounted) {
+            context.go(GoRoutes.home.fullPath);
+          }
+        }
+      } catch (error) {
+        snackbar.alert(context, '로그인 실패');
+      } finally {
+        appleLoading.value = false;
+      }
     }
 
     return Scaffold(

@@ -40,7 +40,7 @@
 				<string>com.googleusercontent.apps.654610827037-vkopt4a4ge4tolfinlvdfob5m2c1qkpl</string>
 			</array>
 		</dict>
-    <dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
@@ -49,21 +49,13 @@
 			</array>
 		</dict>
 	</array>
-  <key>naverConsumerKey</key>
-	<string>eOU0WYBra6JrkaVrlzO8</string>
-	<key>naverConsumerSecret</key>
-	<string>dgWtcVp72t</string>
-	<key>naverServiceAppName</key>
-	<string>veple</string>
-	<key>naverServiceAppUrlScheme</key>
-	<string>naverlogin</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>
-    <string>naversearchapp</string>
-    <string>naversearchthirdlogin</string>
+		<string>naversearchapp</string>
+		<string>naversearchthirdlogin</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -102,5 +94,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>naverConsumerKey</key>
+	<string>eOU0WYBra6JrkaVrlzO8</string>
+	<key>naverConsumerSecret</key>
+	<string>dgWtcVp72t</string>
+	<key>naverServiceAppName</key>
+	<string>veple</string>
+	<key>naverServiceAppUrlScheme</key>
+	<string>naverlogin</string>
 </dict>
 </plist>
