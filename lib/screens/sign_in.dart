@@ -73,7 +73,13 @@ class SignIn extends HookConsumerWidget {
       }
     }
 
-    Future<void> handleAppleLogin() async {}
+    Future<void> handleNaverLogin() async {
+      // todo
+    }
+
+    Future<void> handleAppleLogin() async {
+      // todo
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -108,6 +114,12 @@ class SignIn extends HookConsumerWidget {
                 loading: googleLoading.value,
                 text: '구글로 로그인하기',
                 onPress: handleGoogleLogin,
+              ),
+              const SizedBox(height: 10),
+              Button(
+                loading: kakaoLoading.value,
+                text: '네이버로 로그인하기',
+                onPress: handleNaverLogin,
               ),
               const SizedBox(height: 10),
               Button(

@@ -50,5 +50,6 @@ coverage
 
 *.g.dart 
 *.freezed.dart
+.fvm/flutter_sdk
 google-services.json
 GoogleService-Info.plist
