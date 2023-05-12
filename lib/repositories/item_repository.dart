@@ -86,12 +86,6 @@ class ItemRepository implements IItemRepository {
     var db = await initDB();
     List<Map<String, dynamic>> maps = await db.query('item');
 
-    return List.generate(maps.length, (i) {
-      return ItemModel(
-        id: maps[i]['id'],
-        title: maps[i]['title'],
-        content: maps[i]['content'],
-      );
-    });
+    return maps.map((e) => ItemModel.fromJson(e)).toList();
   }
 }

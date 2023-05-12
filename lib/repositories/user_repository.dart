@@ -52,12 +52,6 @@ class UserRepository implements IUserRepository {
     var db = await initDB();
     List<Map<String, dynamic>> maps = await db.query('user');
 
-    return List.generate(maps.length, (i) {
-      return UserModel(
-        id: maps[i]['id'],
-        email: maps[i]['email'],
-        password: maps[i]['password'],
-      );
-    });
+    return maps.map((e) => UserModel.fromJson(e)).toList();
   }
 }
