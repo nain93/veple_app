@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">veple</string>
+    <string name="client_id">eOU0WYBra6JrkaVrlzO8</string>
+    <string name="client_secret">dgWtcVp72t</string>
+    <string name="client_name">veple</string>
 </resources>

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,6 +20,7 @@ class SignIn extends HookConsumerWidget {
     var t = localization(context);
     var kakaoLoading = useState(false);
     var googleLoading = useState(false);
+    var naderLoading = useState(false);
     var appleLoading = useState(false);
 
     Future<void> handleKakaoLogin() async {
@@ -74,7 +76,22 @@ class SignIn extends HookConsumerWidget {
     }
 
     Future<void> handleNaverLogin() async {
-      // todo
+      try {
+        naderLoading.value = true;
+        await FlutterNaverLogin.logIn();
+        var res = await FlutterNaverLogin.currentAccessToken;
+
+        if (res.accessToken.isNotEmpty) {
+          // todo firebase auth provider login
+          if (context.mounted) {
+            context.go(GoRoutes.home.fullPath);
+          }
+        }
+      } catch (error) {
+        snackbar.alert(context, '로그인 실패');
+      } finally {
+        naderLoading.value = false;
+      }
     }
 
     Future<void> handleAppleLogin() async {
@@ -117,7 +134,7 @@ class SignIn extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Button(
-                loading: kakaoLoading.value,
+                loading: naderLoading.value,
                 text: '네이버로 로그인하기',
                 onPress: handleNaverLogin,
               ),
