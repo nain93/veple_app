@@ -1,19 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:veple/firebase_options.dart';
 import 'package:veple/generated/l10n.dart';
 import 'package:veple/utils/config.dart';
 import 'package:veple/utils/router_config.dart';
 import 'package:veple/utils/themes.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:veple/widgets/model_theme.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'firebase_options.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class Logger extends ProviderObserver {
   @override
@@ -35,7 +35,7 @@ class Logger extends ProviderObserver {
 }
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: '.env');
   await Firebase.initializeApp(
@@ -54,7 +54,7 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeNotifier = ref.watch(modelProvider);
+    var themeNotifier = ref.watch(modelProvider);
     var user = auth.FirebaseAuth.instance.currentUser;
 
     useEffect(() {

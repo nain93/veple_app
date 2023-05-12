@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:veple/models/item_model.dart';
 import 'package:veple/navigations/main_bottom_tab.dart';
 import 'package:veple/screens/edit_profile.dart';
@@ -9,7 +10,6 @@ import 'package:veple/screens/permission_screen.dart';
 import 'package:veple/screens/result.dart';
 import 'package:veple/screens/sample.dart';
 import 'package:veple/screens/sign_in.dart';
-import 'package:go_router/go_router.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -79,7 +79,7 @@ GoRouter routerConfig([String? initialLocation]) => GoRouter(
                   name: GoRoutes.itemDetail.name,
                   path: ':id',
                   builder: (context, state) {
-                    final item = state.extra! as ItemModel;
+                    var item = state.extra! as ItemModel;
                     return ItemDetail(item: item);
                   },
                 ),

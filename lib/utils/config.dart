@@ -1,4 +1,4 @@
-import 'tools.dart';
+import 'package:veple/utils/tools.dart';
 
 class Config {
   factory Config() {

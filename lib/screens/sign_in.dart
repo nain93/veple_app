@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:veple/utils/colors.dart';
 import 'package:veple/utils/localization.dart';
 import 'package:veple/utils/router_config.dart';
 import 'package:veple/widgets/common/button.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:veple/widgets/common/snackbar.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends HookConsumerWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -25,13 +25,13 @@ class SignIn extends HookConsumerWidget {
       try {
         kakaoLoading.value = true;
 
-        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+        var token = await UserApi.instance.loginWithKakaoAccount();
         var provider = auth.OAuthProvider('oidc.kakao');
         var credential = provider.credential(
           idToken: token.idToken,
           accessToken: token.accessToken,
         );
-        auth.FirebaseAuth.instance.signInWithCredential(credential);
+        await auth.FirebaseAuth.instance.signInWithCredential(credential);
         if (context.mounted) {
           context.go(GoRoutes.home.fullPath);
         }
@@ -43,7 +43,7 @@ class SignIn extends HookConsumerWidget {
     }
 
     Future<void> handleGoogleLogin() async {
-      GoogleSignIn googleSignIn = GoogleSignIn(
+      var googleSignIn = GoogleSignIn(
         scopes: [
           // 'email',
           // 'https://www.googleapis.com/auth/contacts.readonly',
@@ -61,7 +61,7 @@ class SignIn extends HookConsumerWidget {
             accessToken: googleSignInAuthentication.accessToken,
             idToken: googleSignInAuthentication.idToken,
           );
-          auth.FirebaseAuth.instance.signInWithCredential(credential);
+          await auth.FirebaseAuth.instance.signInWithCredential(credential);
           if (context.mounted) {
             context.go(GoRoutes.home.fullPath);
           }

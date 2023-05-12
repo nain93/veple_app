@@ -15,7 +15,7 @@ class Home extends HookConsumerWidget {
       Colors.teal,
     ]);
 
-    final pageController = usePageController();
+    var pageController = usePageController();
 
     void onPageChanged(int page) {
       pageController.animateToPage(

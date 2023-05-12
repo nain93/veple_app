@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../utils/colors.dart';
-import 'button.dart';
-import 'styles.dart';
+import 'package:veple/utils/colors.dart';
+import 'package:veple/widgets/common/button.dart';
+import 'package:veple/widgets/common/styles.dart';
 
 class _AlertDialog {
   factory _AlertDialog() {

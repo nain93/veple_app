@@ -1,22 +1,23 @@
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:veple/utils/assets.dart';
 import 'package:veple/utils/router_config.dart';
 import 'package:veple/widgets/common/button.dart';
 import 'package:veple/widgets/common/edit_text.dart';
 import 'package:veple/widgets/common/image.dart';
 import 'package:veple/widgets/model_theme.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart';
 
 class EditProfileArguments {
-  final String? title;
-  final String? person;
 
   EditProfileArguments({this.title, this.person});
+  final String? title;
+  final String? person;
 }
 
 class EditProfile extends HookConsumerWidget {
@@ -27,15 +28,15 @@ class EditProfile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var user = FirebaseAuth.instance.currentUser;
-    final themeNotifier = ref.watch(modelProvider);
+    var themeNotifier = ref.watch(modelProvider);
 
-    final ImagePicker picker = ImagePicker();
+    var picker = ImagePicker();
     var nameValue = useState('');
     var descValue = useState('');
     var imageFile = useState<XFile?>(null);
 
     void pickPhoto(ImageSource source) async {
-      final pickedFile = await picker.pickImage(source: source);
+      var pickedFile = await picker.pickImage(source: source);
       imageFile.value = pickedFile;
     }
 
@@ -180,7 +181,7 @@ class EditProfile extends HookConsumerWidget {
                           ),
                         )),
                     EditText(
-                      onChanged: (String txt) => nameValue.value = txt,
+                      onChanged: (txt) => nameValue.value = txt,
                       hintText: '${user?.displayName}',
                     ),
                     Container(
@@ -194,7 +195,7 @@ class EditProfile extends HookConsumerWidget {
                           ),
                         )),
                     EditText(
-                      onChanged: (String txt) => descValue.value = txt,
+                      onChanged: (txt) => descValue.value = txt,
                       hintText: '자기소개',
                     ),
                     Button(

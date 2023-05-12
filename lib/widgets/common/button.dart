@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utils/colors.dart';
+import 'package:veple/utils/colors.dart';
 
 enum ButtonType {
   solid,

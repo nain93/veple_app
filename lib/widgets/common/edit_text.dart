@@ -85,7 +85,7 @@ class _EditTextState extends State<EditText> {
                       .borderSide
                       .color)),
         ),
-        onChanged: (String txt) => widget.onChanged(txt),
+        onChanged: (txt) => widget.onChanged(txt),
         keyboardType: widget.keyboardType,
       ),
     );

@@ -1,5 +1,5 @@
-import 'package:veple/models/user_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:veple/models/user_model.dart';
 
 void main() {
   test('The User instance has a class variable called name', () {

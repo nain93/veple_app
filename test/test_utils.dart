@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:veple/generated/l10n.dart';
 import 'package:veple/utils/router_config.dart';
 import 'package:veple/utils/themes.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'mocks/navigator_observer.mocks.dart';
 

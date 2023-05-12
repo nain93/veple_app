@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:veple/utils/colors.dart';
 
 class OutlineButton extends StatelessWidget {
-  final void Function() onPressed;
-  final bool disabled;
-  final bool isLoading;
-  final Widget child;
-  final OutlineButtonStyle style;
 
   const OutlineButton({
     Key? key,
@@ -16,6 +11,11 @@ class OutlineButton extends StatelessWidget {
     required this.child,
     this.style = const OutlineButtonStyle(),
   }) : super(key: key);
+  final void Function() onPressed;
+  final bool disabled;
+  final bool isLoading;
+  final Widget child;
+  final OutlineButtonStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -77,19 +77,6 @@ class OutlineButton extends StatelessWidget {
 }
 
 class OutlineButtonStyle {
-  final double? width;
-  final double? height;
-  final Color backgroundColor;
-  final Color? feedbackColor;
-  final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
-  final double borderWidth;
-  final Color borderColor;
-  final BorderRadiusGeometry? borderRadius;
-  final Color? textColor;
-  final double indicatorSize;
-  final double indicatorWidth;
-  final Color? indicatorColor;
 
   const OutlineButtonStyle({
     this.width,
@@ -106,4 +93,17 @@ class OutlineButtonStyle {
     this.indicatorWidth = 2,
     this.indicatorColor = Colors.black,
   });
+  final double? width;
+  final double? height;
+  final Color backgroundColor;
+  final Color? feedbackColor;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final double borderWidth;
+  final Color borderColor;
+  final BorderRadiusGeometry? borderRadius;
+  final Color? textColor;
+  final double indicatorSize;
+  final double indicatorWidth;
+  final Color? indicatorColor;
 }

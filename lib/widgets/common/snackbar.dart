@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
+import 'package:veple/utils/colors.dart';
 
 class _Snackbar {
   factory _Snackbar() {
