@@ -135,14 +135,16 @@ class SignIn extends HookConsumerWidget {
                       fontSize: 32, fontWeight: FontWeight.w700),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 64),
-                child: const Text(
-                  '비디오 플레이',
-                  textAlign: TextAlign.center,
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 64),
+                  child: const Text(
+                    '비디오 플레이',
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
-              const Spacer(),
+              // const Spacer(),
               Button(
                 loading: kakaoLoading.value,
                 text: '카카오로 로그인하기',
