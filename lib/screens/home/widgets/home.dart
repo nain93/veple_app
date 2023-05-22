@@ -8,14 +8,8 @@ class Home extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var videoList = useState([
-      Colors.blue,
-      Colors.red,
-      Colors.yellow,
-      Colors.teal,
-    ]);
-
     var pageController = usePageController();
+    var itemCount = useState(5);
 
     void onPageChanged(int page) {
       pageController.animateToPage(
@@ -23,10 +17,13 @@ class Home extends HookConsumerWidget {
         duration: const Duration(milliseconds: 150),
         curve: Curves.linear,
       );
+    }
 
-      if (page == videoList.value.length - 1) {
-        videoList.value = [...videoList.value, ...videoList.value];
-      }
+    void onVideoFinished() {
+      pageController.nextPage(
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.linear,
+      );
     }
 
     return Scaffold(
@@ -34,10 +31,10 @@ class Home extends HookConsumerWidget {
         controller: pageController,
         onPageChanged: onPageChanged,
         scrollDirection: Axis.vertical,
-        itemCount: videoList.value.length,
+        itemCount: itemCount.value,
         itemBuilder: (context, index) {
           return VideoItem(
-            videoList: videoList,
+            onVideoFinished: onVideoFinished,
             index: index,
           );
         },

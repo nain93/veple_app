@@ -21,7 +21,7 @@ class SignIn extends HookConsumerWidget {
     var t = localization(context);
     var kakaoLoading = useState(false);
     var googleLoading = useState(false);
-    var naderLoading = useState(false);
+    var naverLoading = useState(false);
     var appleLoading = useState(false);
 
     Future<void> handleKakaoLogin() async {
@@ -39,6 +39,7 @@ class SignIn extends HookConsumerWidget {
           context.go(GoRoutes.home.fullPath);
         }
       } catch (error) {
+        print('error:$error');
         snackbar.alert(context, '로그인 실패');
       } finally {
         kakaoLoading.value = false;
@@ -46,12 +47,7 @@ class SignIn extends HookConsumerWidget {
     }
 
     Future<void> handleGoogleLogin() async {
-      var googleSignIn = GoogleSignIn(
-        scopes: [
-          // 'email',
-          // 'https://www.googleapis.com/auth/contacts.readonly',
-        ],
-      );
+      var googleSignIn = GoogleSignIn();
 
       try {
         googleLoading.value = true;
@@ -78,7 +74,7 @@ class SignIn extends HookConsumerWidget {
 
     Future<void> handleNaverLogin() async {
       try {
-        naderLoading.value = true;
+        naverLoading.value = true;
         await FlutterNaverLogin.logIn();
         var res = await FlutterNaverLogin.currentAccessToken;
 
@@ -91,7 +87,7 @@ class SignIn extends HookConsumerWidget {
       } catch (error) {
         snackbar.alert(context, '로그인 실패');
       } finally {
-        naderLoading.value = false;
+        naverLoading.value = false;
       }
     }
 
@@ -158,7 +154,7 @@ class SignIn extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Button(
-                loading: naderLoading.value,
+                loading: naverLoading.value,
                 text: '네이버로 로그인하기',
                 onPress: handleNaverLogin,
               ),
