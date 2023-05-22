@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:veple/screens/home/widgets/video_item.dart';
@@ -26,18 +27,30 @@ class Home extends HookConsumerWidget {
       );
     }
 
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)
+    ));
+
     return Scaffold(
-      body: PageView.builder(
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        scrollDirection: Axis.vertical,
-        itemCount: itemCount.value,
-        itemBuilder: (context, index) {
-          return VideoItem(
-            onVideoFinished: onVideoFinished,
-            index: index,
-          );
+      backgroundColor: Colors.black,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Future.delayed(const Duration(seconds: 5));
         },
+        displacement: 50,
+        edgeOffset: kToolbarHeight,
+        child: PageView.builder(
+          controller: pageController,
+          onPageChanged: onPageChanged,
+          scrollDirection: Axis.vertical,
+          itemCount: itemCount.value,
+          itemBuilder: (context, index) {
+            return VideoItem(
+              onVideoFinished: onVideoFinished,
+              index: index,
+            );
+          },
+        ),
       ),
     );
   }

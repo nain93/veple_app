@@ -46,9 +46,6 @@ class _VideoItemState extends State<VideoItem>
       value: 1.5,
       duration: const Duration(milliseconds: 150),
     );
-    _animateController.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -93,8 +90,14 @@ class _VideoItemState extends State<VideoItem>
           child: GestureDetector(onTap: handleVideoPlay),
         ),
         Positioned.fill(
-            child: Transform.scale(
-          scale: _animateController.value,
+            child: AnimatedBuilder(
+          animation: _animateController,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _animateController.value,
+              child: child,
+            );
+          },
           child: AnimatedOpacity(
             opacity: _isPaused ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 300),
