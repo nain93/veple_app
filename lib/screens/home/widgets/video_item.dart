@@ -18,7 +18,7 @@ class _VideoItemState extends State<VideoItem>
   final _videoPlayerController =
       VideoPlayerController.asset(Assets.sampleVideo);
 
-  late AnimationController _animateController;
+  late final AnimationController _animateController;
 
   var _isPaused = false;
 
@@ -76,7 +76,8 @@ class _VideoItemState extends State<VideoItem>
       key: Key('${widget.index}'),
       onVisibilityChanged: (info) {
         if (info.visibleFraction == 1 &&
-            !_videoPlayerController.value.isPlaying) {
+            !_videoPlayerController.value.isPlaying &&
+            !_isPaused) {
           _videoPlayerController.play();
         }
       },
