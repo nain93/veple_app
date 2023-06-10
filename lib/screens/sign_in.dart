@@ -39,7 +39,6 @@ class SignIn extends HookConsumerWidget {
           context.go(GoRoutes.home.fullPath);
         }
       } catch (error) {
-        print('error:$error');
         snackbar.alert(context, '로그인 실패');
       } finally {
         kakaoLoading.value = false;
