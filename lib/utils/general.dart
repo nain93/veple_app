@@ -17,10 +17,8 @@ class General {
     );
   }
 
-  void showModalTopSheet(
-    BuildContext context,
-    String message,
-  ) {
+  void showModalTopSheet(BuildContext context, Widget builder,
+      {Color? backgroundColor, double? height}) {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -31,27 +29,12 @@ class General {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
+            SizedBox(
+              height: height,
               width: MediaQuery.of(context).size.width,
-              color: Colors.white,
-              child: Card(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    ListTile(
-                      title: const Text('Item 1'),
-                      onTap: () => Navigator.of(context).pop('item1'),
-                    ),
-                    ListTile(
-                      title: const Text('Item 2'),
-                      onTap: () => Navigator.of(context).pop('item2'),
-                    ),
-                    ListTile(
-                      title: const Text('Item 3'),
-                      onTap: () => Navigator.of(context).pop('item3'),
-                    ),
-                  ],
-                ),
+              child: Material(
+                color: backgroundColor ?? Colors.white,
+                child: builder,
               ),
             ),
           ],
